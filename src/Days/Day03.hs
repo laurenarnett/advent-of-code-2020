@@ -19,7 +19,7 @@ inputParser = do
   rs@(r:_) <- sepBy rowParser endOfLine
   let n = length rs
       m = length r
-  pure $ listArray ((1, 1), (n, m)) (concat rs)
+  pure $ listArray ((0, 0), (n - 1, m - 1)) (concat rs)
 
 rowParser :: Parser [Bool]
 rowParser = do
@@ -29,14 +29,31 @@ rowParser = do
 ------------ TYPES ------------
 type Input = Array (Int, Int) Bool
 
-type OutputA = Void
+type OutputA = Int
 
-type OutputB = Void
+type OutputB = Int
 
 ------------ PART A ------------
 partA :: Input -> OutputA
-partA = error "Not implemented yet!"
+partA arr = countTrees arr 0 0
+
+countTrees :: Input -> Int -> Int -> Int
+countTrees arr n m = if | n == (fst (snd (bounds arr)) + 1) -> 0
+                        | arr ! (n, m) -> 1 + countTrees arr (n + 1) ((m + 3) `mod` (snd (snd (bounds arr)) + 1))
+                        | not (arr ! (n, m)) -> countTrees arr (n + 1) ((m + 3) `mod` (snd (snd (bounds arr)) + 1))
 
 ------------ PART B ------------
 partB :: Input -> OutputB
-partB = error "Not implemented yet!"
+partB arr = countHappyTrees arr 1 1
+          * countHappyTrees arr 1 3
+          * countHappyTrees arr 1 5
+          * countHappyTrees arr 1 7
+          * countHappyTrees arr 2 1
+
+countHappyTrees :: Input -> Int -> Int -> Int
+countHappyTrees arr rise run = go 0 0 
+  where
+    go n m = 
+        if | n >= (fst (snd (bounds arr)) + 1) -> 0
+           | arr ! (n, m) -> 1 + go (n + rise) ((m + run) `mod` (snd (snd (bounds arr)) + 1))
+           | not (arr ! (n, m)) -> go (n + rise) ((m + run) `mod` (snd (snd (bounds arr)) + 1))

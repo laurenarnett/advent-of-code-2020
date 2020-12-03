@@ -5,7 +5,7 @@ import Test
 
 testInput :: ByteString
 testInput =
-[r|..##.........##.........##.........##.........##.........##.......
+  [r|..##.........##.........##.........##.........##.........##.......
 #...#...#..#...#...#..#...#...#..#...#...#..#...#...#..#...#...#..
 .#....#..#..#....#..#..#....#..#..#....#..#..#....#..#..#....#..#.
 ..#.#...#.#..#.#...#.#..#.#...#.#..#.#...#.#..#.#...#.#..#.#...#.#
@@ -21,7 +21,8 @@ testInput =
 spec :: Spec
 spec = do
   describe "Part a" do
-    it "find the number of trees you would run into on a slope of Right 3, Down 1"
+    it "find the number of trees you would run into on a slope of Right 3, Down 1" $
       runA testInput === 7
   describe "Part b" do
-    pass
+    it "find the product of the number of trees you would run into given 5 different varieties of slopes" $
+      runB testInput === 336
