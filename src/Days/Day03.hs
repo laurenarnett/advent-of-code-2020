@@ -38,9 +38,10 @@ partA :: Input -> OutputA
 partA arr = countTrees arr 0 0
 
 countTrees :: Input -> Int -> Int -> Int
-countTrees arr n m = if | n == (fst (snd (bounds arr)) + 1) -> 0
-                        | arr ! (n, m) -> 1 + countTrees arr (n + 1) ((m + 3) `mod` (snd (snd (bounds arr)) + 1))
-                        | not (arr ! (n, m)) -> countTrees arr (n + 1) ((m + 3) `mod` (snd (snd (bounds arr)) + 1))
+countTrees arr n m = if | n == (rows + 1) -> 0
+                        | arr ! (n, m) -> 1 + countTrees arr (n + 1) ((m + 3) `mod` (cols + 1))
+                        | not (arr ! (n, m)) -> countTrees arr (n + 1) ((m + 3) `mod` (cols + 1))
+  where (_, (rows, cols)) = bounds arr
 
 ------------ PART B ------------
 partB :: Input -> OutputB
