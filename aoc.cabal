@@ -45,7 +45,8 @@ common shared
     , vector
     , bytestring
     , array
-  
+    , graphite
+
 library
   import:          shared
   exposed-modules:
