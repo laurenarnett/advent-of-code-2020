@@ -46,7 +46,8 @@ common shared
     , bytestring
     , array
     , graphite
-
+    , monad-memo
+    
 library
   import:          shared
   exposed-modules:
